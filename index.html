@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Quiz Application</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- User Information Form -->
+        <div id="user-info" class="card p-3">
+            <h2 class="mb-3">Enter Your Details</h2>
+            <form id="user-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="regno">Registration Number</label>
+                    <input type="text" class="form-control" id="regno" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Start Quiz</button>
+            </form>
+        </div>
+        
+        <!-- Quiz Topic Selection -->
+        <div id="quiz-topic" class="mt-4 card p-3 d-none">
+            <h2>Select Quiz Topic</h2>
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action" onclick="startQuiz('science')">Science</a>
+                <a href="#" class="list-group-item list-group-item-action" onclick="startQuiz('history')">History</a>
+                <a href="#" class="list-group-item list-group-item-action" onclick="startQuiz('math')">Math</a>
+            </div>
+            <button class="btn btn-secondary mt-3" onclick="backToUserInfo()">Back</button>
+        </div>
+        
+        <!-- Quiz Section -->
+        <div id="quiz-section" class="mt-4 card p-3 d-none">
+            <h2 id="quiz-title"></h2>
+            <div id="question-container">
+                <p id="question-text"></p>
+                <div id="options" class="list-group"></div>
+            </div>
+            <div class="d-flex justify-content-between mt-3">
+                <button class="btn btn-primary" onclick="previousQuestion()">Previous</button>
+                <button class="btn btn-primary" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+        
+        <!-- Feedback Section -->
+        <div id="feedback-section" class="mt-4 card p-3 d-none">
+            <h2>Quiz Completed !</h2>
+            <p id="score-text"></p>
+            <p>Your response has been recorded.</p>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
