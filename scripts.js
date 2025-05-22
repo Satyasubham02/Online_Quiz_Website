@@ -2,6 +2,8 @@ let currentQuestion = 0;
 let score = 0;
 let selectedQuiz = '';
 let userAnswers = [];
+let timerInterval;
+let secondsElapsed = 0;
 
 const quizzes = {
     science: [
@@ -46,7 +48,19 @@ function startQuiz(topic) {
     document.getElementById('quiz-title').textContent = `${topic.charAt(0).toUpperCase() + topic.slice(1)} Quiz`;
     currentQuestion = 0;
     score = 0;
+    secondsElapsed = 0;
+    startTimer();
     showQuestion();
+}
+
+function startTimer() {
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+        secondsElapsed++;
+        const minutes = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+        const seconds = String(secondsElapsed % 60).padStart(2, '0');
+        document.getElementById('timer').textContent = `Time: ${minutes}:${seconds}`;
+    }, 1000);
 }
 
 function showQuestion() {
@@ -65,11 +79,18 @@ function showQuestion() {
         }
         optionsContainer.appendChild(optionElement);
     });
+
+    // Show submit button on last question
+    const submitBtn = document.getElementById('submit-btn');
+    if (currentQuestion === quiz.length - 1) {
+        submitBtn.classList.remove('d-none');
+    } else {
+        submitBtn.classList.add('d-none');
+    }
 }
 
 function selectAnswer(selectedOption, index) {
-    const optionsContainer = document.getElementById('options');
-    const optionElements = optionsContainer.getElementsByClassName('list-group-item');
+    const optionElements = document.querySelectorAll('#options .list-group-item');
     for (let i = 0; i < optionElements.length; i++) {
         optionElements[i].classList.remove('active');
     }
@@ -81,9 +102,6 @@ function nextQuestion() {
     if (currentQuestion < quizzes[selectedQuiz].length - 1) {
         currentQuestion++;
         showQuestion();
-    } else {
-        calculateScore();
-        showFeedback();
     }
 }
 
@@ -91,6 +109,18 @@ function previousQuestion() {
     if (currentQuestion > 0) {
         currentQuestion--;
         showQuestion();
+    }
+}
+
+function confirmSubmit() {
+    clearInterval(timerInterval);
+    const minutes = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+    const seconds = String(secondsElapsed % 60).padStart(2, '0');
+    const timeTaken = `${minutes}:${seconds}`;
+    const confirmed = confirm(`You took ${timeTaken}. Do you want to submit the quiz?`);
+    if (confirmed) {
+        calculateScore();
+        showFeedback(timeTaken);
     }
 }
 
@@ -104,8 +134,9 @@ function calculateScore() {
     });
 }
 
-function showFeedback() {
+function showFeedback(timeTaken) {
     document.getElementById('quiz-section').classList.add('d-none');
     document.getElementById('feedback-section').classList.remove('d-none');
-    document.getElementById('score-text').textContent = `You scored ${score} out of ${quizzes[selectedQuiz].length}`;
+    document.getElementById('score-text').textContent = 
+        `You scored ${score} out of ${quizzes[selectedQuiz].length} in ${timeTaken}`;
 }
