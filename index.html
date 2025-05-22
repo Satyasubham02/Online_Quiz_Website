@@ -6,10 +6,30 @@
     <title>Online Quiz Application</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        #timer {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container justify-content-center d-flex">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="https://th.bing.com/th/id/OIP.IXHPQKEKzxDJjvy0TuGZzgHaHa?cb=iwp2&rs=1&pid=ImgDetMain"
+                     width="60" height="60"
+                     class="d-inline-block align-top mr-2" alt="Logo">
+                <span class="font-weight-bold text-center">
+                    Institute of Technical Education and Research (S'O'A University)
+                </span>
+            </a>
+        </div>
+    </nav>
+
+
     <div class="container mt-5">
-        <!-- User Information Form -->
+        <!-- User Info -->
         <div id="user-info" class="card p-3">
             <h2 class="mb-3">Enter Your Details</h2>
             <form id="user-form">
@@ -28,8 +48,8 @@
                 <button type="submit" class="btn btn-primary">Start Quiz</button>
             </form>
         </div>
-        
-        <!-- Quiz Topic Selection -->
+
+        <!-- Quiz Topic -->
         <div id="quiz-topic" class="mt-4 card p-3 d-none">
             <h2>Select Quiz Topic</h2>
             <div class="list-group">
@@ -39,10 +59,13 @@
             </div>
             <button class="btn btn-secondary mt-3" onclick="backToUserInfo()">Back</button>
         </div>
-        
+
         <!-- Quiz Section -->
         <div id="quiz-section" class="mt-4 card p-3 d-none">
-            <h2 id="quiz-title"></h2>
+            <div class="d-flex justify-content-between">
+                <h2 id="quiz-title"></h2>
+                <div id="timer">Time: 00:00</div>
+            </div>
             <div id="question-container">
                 <p id="question-text"></p>
                 <div id="options" class="list-group"></div>
@@ -50,12 +73,13 @@
             <div class="d-flex justify-content-between mt-3">
                 <button class="btn btn-primary" onclick="previousQuestion()">Previous</button>
                 <button class="btn btn-primary" onclick="nextQuestion()">Next</button>
+                <button id="submit-btn" class="btn btn-success d-none" onclick="confirmSubmit()">Submit</button>
             </div>
         </div>
-        
+
         <!-- Feedback Section -->
         <div id="feedback-section" class="mt-4 card p-3 d-none">
-            <h2>Quiz Completed !</h2>
+            <h2>Quiz Completed!</h2>
             <p id="score-text"></p>
             <p>Your response has been recorded.</p>
         </div>
